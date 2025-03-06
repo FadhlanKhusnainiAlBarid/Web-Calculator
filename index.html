@@ -115,82 +115,111 @@
       <div id="btn-container">
         <button
           class="btn btn-opration"
-          onclick="InputValue(' + ')"
+          onclick="inputOperaion(value)"
           value=" + "
         >
           +
         </button>
         <button
           class="btn btn-opration"
-          onclick="InputValue(' - ')"
+          onclick="inputOperaion(value)"
           value=" - "
         >
           -
         </button>
         <button
           class="btn btn-opration"
-          onclick="InputValue(' x ')"
+          onclick="inputOperaion(value)"
           value=" x "
         >
           x
         </button>
         <button
           class="btn btn-opration"
-          onclick="InputValue(' ÷ ')"
+          onclick="inputOperaion(value)"
           value=" ÷ "
         >
           ÷
         </button>
-        <button class="btn btn-number" onclick="InputValue('7')" value="7">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="7">
           7
         </button>
-        <button class="btn btn-number" onclick="InputValue('8')" value="8">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="8">
           8
         </button>
-        <button class="btn btn-number" onclick="InputValue('9')" value="9">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="9">
           9
         </button>
-        <button class="btn btn-count" onclick="InputValue('=')" value="=">
-          =
-        </button>
-        <button class="btn btn-number" onclick="InputValue('4')" value="4">
+        <button class="btn btn-count" onclick="Count(' =')" value="=">=</button>
+        <button class="btn btn-number" onclick="InputNumber(value)" value="4">
           4
         </button>
-        <button class="btn btn-number" onclick="InputValue('5')" value="5">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="5">
           5
         </button>
-        <button class="btn btn-number" onclick="InputValue('6')" value="6">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="6">
           6
         </button>
-        <button class="btn btn-number" onclick="InputValue('1')" value="1">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="1">
           1
         </button>
-        <button class="btn btn-number" onclick="InputValue('2')" value="2">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="2">
           2
         </button>
-        <button class="btn btn-number" onclick="InputValue('3')" value="3">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="3">
           3
         </button>
-        <button class="btn btn-number" onclick="InputValue('0')" value="0">
+        <button class="btn btn-number" onclick="InputNumber(value)" value="0">
           0
         </button>
-        <button class="btn btn-number" onclick="InputValue('.')" value=".">
+        <button class="btn btn-number" onclick="InputDesimal('.')" value=".">
           .
         </button>
-        <button class="btn btn-number" onclick="InputValue('AC')" value="AC">
-          AC
-        </button>
+        <button class="btn btn-number" onclick="Reset()" value="AC">AC</button>
       </div>
     </div>
     <script>
       let textShow = document.getElementById("text-show");
+      let arrayCount = [];
+      let zero = false;
+      let operation = false;
+      let numberAfterOperation = false;
+      let CountDecimal = false;
+      let equel = false;
 
-      function InputValue(value) {
+      function Reset() {
+        zero = false;
+        operation = false;
+        numberAfterOperation = false;
+        CountDecimal = false;
+        equel = false;
+        arrayCount = [];
+        textShow.innerText = "";
+        textInput.value = "0";
+      }
+
+      function InputNumber(value) {
         textInput.value =
-          textInput.value === "0" ? value : textInput.value + value;
+          textInput.value == "0" ? value : textInput.value + value;
+      }
 
-        if (value == "AC") {
-          textInput.value = "0";
+      function InputDesimal(value) {
+        if (CountDecimal == false) {
+          CountDecimal = true;
+          textInput.value += value;
+        } else {
+          return null;
+        }
+      }
+
+      function inputOperaion(value) {
+        if (operation == false) {
+          operation = true;
+          textInput.value += value;
+        } else if (numberAfterOperation == true) {
+          return null;
+        } else {
+          textInput.value = textInput.value.slice(0, -3) + value;
         }
       }
     </script>
