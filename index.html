@@ -150,7 +150,9 @@
         <button class="btn btn-number" onclick="InputNumber(value)" value="9">
           9
         </button>
-        <button class="btn btn-count" onclick="Count(' =')" value="=">=</button>
+        <button class="btn btn-count" onclick="Count(' = ')" value="=">
+          =
+        </button>
         <button class="btn btn-number" onclick="InputNumber(value)" value="4">
           4
         </button>
@@ -180,7 +182,6 @@
     </div>
     <script>
       let textShow = document.getElementById("text-show");
-      let arrayCount = [];
       let zero = false;
       let operation = false;
       let numberAfterOperation = false;
@@ -193,18 +194,49 @@
         numberAfterOperation = false;
         CountDecimal = false;
         equel = false;
-        arrayCount = [];
         textShow.innerText = "";
         textInput.value = "0";
       }
 
       function InputNumber(value) {
-        textInput.value =
-          textInput.value == "0" ? value : textInput.value + value;
+        if (zero == false && value == "0" && textInput.value == "0") {
+          zero = true;
+          console.log(
+            "kondisi dimana zero false dan value 0 dan textInput.value 0"
+          );
+        } else if (zero == true && value == "0" && textInput.value == "0") {
+          console.log("kondisi dimana zero true dan value 0");
+          textInput.value = value;
+        } else if (zero == true && CountDecimal == false) {
+          console.log("tidak jadi dihitung desimal dan ingin berubah number");
+          zero = false;
+          textInput.value = value;
+        } else if (
+          zero == false &&
+          CountDecimal == false &&
+          textInput.value == "0"
+        ) {
+          console.log("dari awal zero default terus di ganti dengan number");
+          textInput.value = value;
+        } else if (operation === true && numberAfterOperation == false) {
+          numberAfterOperation = true;
+          operation = false;
+          textInput.value += value;
+        } else if (equel == true) {
+          equel = false;
+          textShow.innerText = "= " + textInput.value;
+          textInput.value = "";
+          textInput.value += value;
+        } else {
+          textInput.value += value;
+        }
       }
 
       function InputDesimal(value) {
-        if (CountDecimal == false) {
+        if (CountDecimal == false && zero == false) {
+          CountDecimal = true;
+          textInput.value += value;
+        } else if (CountDecimal == false && zero == true) {
           CountDecimal = true;
           textInput.value += value;
         } else {
@@ -214,13 +246,26 @@
 
       function inputOperaion(value) {
         if (operation == false) {
+          CountDecimal = false;
           operation = true;
           textInput.value += value;
-        } else if (numberAfterOperation == true) {
-          return null;
+          if (equel == true) {
+            textShow.innerText = "= " + textInput.value.slice(0, -3);
+          }
         } else {
           textInput.value = textInput.value.slice(0, -3) + value;
         }
+      }
+
+      function Count(value) {
+        textShow.innerText = textInput.value + value;
+        textInput.value = textInput.value.replace(/\x/g, "*");
+        textInput.value = textInput.value.replace(/\÷/g, "/");
+        textInput.value = eval(textInput.value);
+        zero = false;
+        numberAfterOperation = false;
+        CountDecimal = false;
+        equel = true;
       }
     </script>
   </body>
