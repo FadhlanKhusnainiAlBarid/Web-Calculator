@@ -218,7 +218,7 @@
         ) {
           console.log("dari awal zero default terus di ganti dengan number");
           textInput.value = value;
-        } else if (operation === true && numberAfterOperation == false) {
+        } else if (operation == true && numberAfterOperation == false) {
           numberAfterOperation = true;
           operation = false;
           textInput.value += value;
@@ -247,6 +247,7 @@
       function inputOperaion(value) {
         if (operation == false) {
           CountDecimal = false;
+          numberAfterOperation = false;
           operation = true;
           textInput.value += value;
           if (equel == true) {
@@ -258,9 +259,13 @@
       }
 
       function Count(value) {
-        textShow.innerText = textInput.value + value;
-        textInput.value = textInput.value.replace(/\x/g, "*");
-        textInput.value = textInput.value.replace(/\÷/g, "/");
+        if (operation == false) {
+          textShow.innerText = textInput.value + value;
+          textInput.value = textInput.value.replace(/\x/g, "*");
+          textInput.value = textInput.value.replace(/\÷/g, "/");
+        } else {
+          textShow.innerText = " = 0";
+        }
         textInput.value = eval(textInput.value);
         zero = false;
         numberAfterOperation = false;
