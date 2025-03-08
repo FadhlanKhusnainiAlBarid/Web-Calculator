@@ -187,6 +187,7 @@
       let numberAfterOperation = false;
       let CountDecimal = false;
       let equel = false;
+      arrayCount = [];
 
       function Reset() {
         zero = false;
@@ -246,6 +247,13 @@
 
       function inputOperaion(value) {
         if (operation == false) {
+          console.log(arrayCount.join("").length);
+          arrayCount.push(
+            Number(textInput.value.slice(arrayCount.join("").length)),
+            value
+          );
+          console.log(arrayCount);
+          //
           CountDecimal = false;
           numberAfterOperation = false;
           operation = true;
@@ -254,6 +262,9 @@
             textShow.innerText = "= " + textInput.value.slice(0, -3);
           }
         } else {
+          arrayCount.pop();
+          arrayCount.push(value);
+          console.log(arrayCount);
           textInput.value = textInput.value.slice(0, -3) + value;
         }
       }
