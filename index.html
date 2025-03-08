@@ -202,14 +202,9 @@
       function InputNumber(value) {
         if (zero == false && value == "0" && textInput.value == "0") {
           zero = true;
-          console.log(
-            "kondisi dimana zero false dan value 0 dan textInput.value 0"
-          );
         } else if (zero == true && value == "0" && textInput.value == "0") {
-          console.log("kondisi dimana zero true dan value 0");
           textInput.value = value;
         } else if (zero == true && CountDecimal == false) {
-          console.log("tidak jadi dihitung desimal dan ingin berubah number");
           zero = false;
           textInput.value = value;
         } else if (
@@ -217,7 +212,6 @@
           CountDecimal == false &&
           textInput.value == "0"
         ) {
-          console.log("dari awal zero default terus di ganti dengan number");
           textInput.value = value;
         } else if (operation == true && numberAfterOperation == false) {
           numberAfterOperation = true;
@@ -247,13 +241,11 @@
 
       function inputOperaion(value) {
         if (operation == false) {
-          console.log(arrayCount.join("").length);
           arrayCount.push(
             Number(textInput.value.slice(arrayCount.join("").length)),
             value
           );
-          console.log(arrayCount);
-          //
+          zero = false;
           CountDecimal = false;
           numberAfterOperation = false;
           operation = true;
@@ -271,17 +263,20 @@
 
       function Count(value) {
         if (operation == false) {
+          arrayCount.push(
+            Number(textInput.value.slice(arrayCount.join("").length))
+          );
           textShow.innerText = textInput.value + value;
-          textInput.value = textInput.value.replace(/\x/g, "*");
-          textInput.value = textInput.value.replace(/\÷/g, "/");
+          textInput.value = eval(
+            arrayCount.join("").replace(/\x/g, "*").replace(/\÷/g, "/")
+          );
+          zero = false;
+          numberAfterOperation = false;
+          CountDecimal = false;
+          equel = true;
         } else {
           textShow.innerText = " = 0";
         }
-        textInput.value = eval(textInput.value);
-        zero = false;
-        numberAfterOperation = false;
-        CountDecimal = false;
-        equel = true;
       }
     </script>
   </body>
